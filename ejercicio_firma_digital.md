@@ -38,7 +38,7 @@ $ gpg --export -a Paloma R. Garcia Campon > PalomaR.Garcia.asc
 ~~~
 $ gpg --sign ExFH-2TR.pdf 
 $ scp Servidor\ de\ instalación.pdf.gpg ftirado@172.22.6.25:
-
+0
 $ scp clave-publica.asc moralg@172.22.9.198:
 $ scp ExFH-2TR.pdf.gpg moralg@172.22.9.198:
 
