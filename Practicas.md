@@ -220,7 +220,7 @@ gpg: Firma correcta de "Alejandro Morales Gracia <ale95mogra@gmail.com>" [total]
 **1. Configura el cliente de correo evolution con tu cuenta de correo habitual**
 
 Se entra en la interfaz gráfica del correo evolution y se introduce los datos del correo:
-!(https://github.com/PalomaR88/Integridad-firmas-y-autenticaci-n-/blob/master/Img_t2A.png)
+!(Img_t2A.png)
 !(https://github.com/PalomaR88/Integridad-firmas-y-autenticaci-n-/blob/master/Img_tarea2B.png)
 
 
