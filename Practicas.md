@@ -223,12 +223,20 @@ Se entra en la interfaz gráfica del correo evolution y se introduce los datos d
 ![imagen1](Img_t2A.png)
 ![imagen2](https://github.com/PalomaR88/Integridad-firmas-y-autenticaci-n-/blob/master/Img_tarea2B.png)
 
-
+Se selecciona Enviar/Recibir.
 
 
 **2. Añade a la cuenta las opciones de seguridad para poder enviar correos firmados con tu clave privada o cifrar los mensajes para otros destinatarios**
 
+En la pesta Editar, se selecciona Preferencias. Se selecciona la cuenta a la que se quiere añadir la clave y se se añade el Id de la clave en la pestaña seguridad. 
+
+![imagen3](Img_t2.png)
+
+
 **3. Envía y recibe varios mensajes con tus compañeros y comprueba el funcionamiento adecuado de GPG**
+
+![Imagen4](Img_t2B.png)
+![Imagen5](Img_t3.png)
 
 
 ## Tarea 3: Integridad de ficheros
