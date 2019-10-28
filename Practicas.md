@@ -246,10 +246,38 @@ En la pesta Editar, se selecciona Preferencias. Se selecciona la cuenta a la que
 
 **1. Para validar el contenido de la imagen CD, solo asegúrese de usar la herramienta apropiada para sumas de verificación. Para cada versión publicada existen archivos de suma de comprobación con algoritmos fuertes (SHA256 y SHA512); debería usar las herramientas sha256sum o sha512sum para trabajar con ellos.**
 
+~~~
+paloma@coatlicue:~/Descargas$ wget https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/SHA512SUMS.sign
+paloma@coatlicue:~/Descargas$ wget https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/SHA512SUMS
+~~~
+
+~~~
+paloma@coatlicue:~/Descargas$ gpg --keyserver keyring.debian.org --recv DF9B9C49EAA9298432589D76DA87E80D6294BE9B
+gpg: clave DA87E80D6294BE9B: "Debian CD signing key <debian-cd@lists.debian.org>" sin cambios
+gpg: Cantidad total procesada: 1
+gpg:              sin cambios: 1
+~~~
+
+~~~
+paloma@coatlicue:~/Descargas$ gpg --verify SHA512SUMS.sign SHA512SUMS
+gpg: Firmado el dom 08 sep 2019 17:52:40 CEST
+gpg:                usando RSA clave DF9B9C49EAA9298432589D76DA87E80D6294BE9B
+gpg: Firma correcta de "Debian CD signing key <debian-cd@lists.debian.org>" [desconocido]
+gpg: ATENCIÓN: ¡Esta clave no está certificada por una firma de confianza!
+gpg:          No hay indicios de que la firma pertenezca al propietario.
+Huellas dactilares de la clave primaria: DF9B 9C49 EAA9 2984 3258  9D76 DA87 E80D 6294 BE9B
+~~~
+
+~~~
+paloma@coatlicue:~/Descargas$ sha512sum -c SHA512SUMS 2>/dev/null | grep debian-10.1.0-amd64-netinst.iso 
+debian-10.1.0-amd64-netinst.iso: La suma coincide
+~~~
+
+
 **2. Verifica que el contenido del hash que has utilizado no ha sido manipulado, usando la firma digital que encontrarás en el repositorio. Puedes encontrar una guía para realizarlo en este artículo: How to verify an authenticity of downloaded Debian ISO images**
 
 
-##Tarea 4: Integridad y autenticidad (apt secure)
+## Tarea 4: Integridad y autenticidad (apt secure)
 >Cuando nos instalamos un paquete en nuestra distribución linux tenemos que asegurarnos que ese paquete es legítimo. Para conseguir este objetivo se utiliza criptografía asimétrica, y en el caso de Debian a este sistema se llama apt secure. Esto lo debemos tener en cuenta al utilizar los repositorios oficiales. Cuando añadamos nuevos repositorios tendremos que añadir las firmas necesarias para confiar en que los paquetes son legítimos y no han sido modificados.
 
 Busca información sobre apt secure y responde las siguientes preguntas:
