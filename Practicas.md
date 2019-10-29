@@ -210,6 +210,63 @@ gpg: Firma correcta de "Alejandro Morales Gracia <ale95mogra@gmail.com>" [total]
 
 **6. Comprueba que puedes verificar sin “problemas” una firma recibida por una tercera persona en la que confía una persona en la que tu confías.**
 
+Hay que editar la clave del compañero en el que vamos a confiar para tener confianza absoluta:
+~~~
+paloma@coatlicue:~/DISCO2/CICLO II/SEGURIDAD/2. Criptografía/Integridad-firmas-y-autenticaci-n-$ gpg --edit-key A615146E82E272C899A34100F405106DBBABFB72
+gpg (GnuPG) 2.2.12; Copyright (C) 2018 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+
+pub  rsa3072/F405106DBBABFB72
+     creado: 2019-10-07  caduca: 2019-11-06  uso: SC  
+     confianza: desconocido   validez: total
+sub  rsa3072/1A3DEC0EAA18E3ED
+     creado: 2019-10-07  caduca: 2019-11-06  uso: E   
+[   total   ] (1). Fernando Tirado <fernando.tb.95@gmail.com>
+
+gpg> trust
+pub  rsa3072/F405106DBBABFB72
+     creado: 2019-10-07  caduca: 2019-11-06  uso: SC  
+     confianza: desconocido   validez: total
+sub  rsa3072/1A3DEC0EAA18E3ED
+     creado: 2019-10-07  caduca: 2019-11-06  uso: E   
+[   total   ] (1). Fernando Tirado <fernando.tb.95@gmail.com>
+
+Por favor, decida su nivel de confianza en que este usuario
+verifique correctamente las claves de otros usuarios (mirando
+pasaportes, comprobando huellas dactilares en diferentes fuentes...)
+
+
+  1 = No lo sé o prefiero no decirlo
+  2 = NO tengo confianza
+  3 = Confío un poco
+  4 = Confío totalmente
+  5 = confío absolutamente
+  m = volver al menú principal
+
+¿Su decisión? 5
+¿De verdad quiere asignar absoluta confianza a esta clave? (s/N) s
+
+pub  rsa3072/F405106DBBABFB72
+     creado: 2019-10-07  caduca: 2019-11-06  uso: SC  
+     confianza: absoluta      validez: total
+sub  rsa3072/1A3DEC0EAA18E3ED
+     creado: 2019-10-07  caduca: 2019-11-06  uso: E   
+[   total   ] (1). Fernando Tirado <fernando.tb.95@gmail.com>
+Ten en cuenta que la validez de clave mostrada no es necesariamente
+correcta a menos de que reinicies el programa.
+gpg> save
+Clave sin cambios, no se necesita actualización.
+~~~
+
+~~~
+paloma@coatlicue:~/Descargas$ gpg --verify paraPaloma.txt.sig paraPaloma.txt
+gpg: Firmado el mar 29 oct 2019 10:38:17 CET
+gpg:                usando RSA clave ED536410153671FE10EF9C6A30B2CE7D46D49C6B
+gpg: Firma correcta de "Luis Vazquez Alejo <luisvazquezalejo@gmail.com>" [total]
+~~~
+
 
 
 
@@ -246,11 +303,15 @@ En la pesta Editar, se selecciona Preferencias. Se selecciona la cuenta a la que
 
 **1. Para validar el contenido de la imagen CD, solo asegúrese de usar la herramienta apropiada para sumas de verificación. Para cada versión publicada existen archivos de suma de comprobación con algoritmos fuertes (SHA256 y SHA512); debería usar las herramientas sha256sum o sha512sum para trabajar con ellos.**
 
+**2. Verifica que el contenido del hash que has utilizado no ha sido manipulado, usando la firma digital que encontrarás en el repositorio. Puedes encontrar una guía para realizarlo en este artículo: How to verify an authenticity of downloaded Debian ISO images**
+
+Descarga de los ficheros necesarios:
 ~~~
 paloma@coatlicue:~/Descargas$ wget https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/SHA512SUMS.sign
 paloma@coatlicue:~/Descargas$ wget https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/SHA512SUMS
 ~~~
 
+Al verificar el documento firmado sin la clave, nos indica que necesitamos la clave. Tras descargarnos la clave se verifica. 
 ~~~
 paloma@coatlicue:~/Descargas$ gpg --keyserver keyring.debian.org --recv DF9B9C49EAA9298432589D76DA87E80D6294BE9B
 gpg: clave DA87E80D6294BE9B: "Debian CD signing key <debian-cd@lists.debian.org>" sin cambios
@@ -258,6 +319,7 @@ gpg: Cantidad total procesada: 1
 gpg:              sin cambios: 1
 ~~~
 
+Volvemos a validar y nos dice que es correcto.
 ~~~
 paloma@coatlicue:~/Descargas$ gpg --verify SHA512SUMS.sign SHA512SUMS
 gpg: Firmado el dom 08 sep 2019 17:52:40 CEST
@@ -274,7 +336,7 @@ debian-10.1.0-amd64-netinst.iso: La suma coincide
 ~~~
 
 
-**2. Verifica que el contenido del hash que has utilizado no ha sido manipulado, usando la firma digital que encontrarás en el repositorio. Puedes encontrar una guía para realizarlo en este artículo: How to verify an authenticity of downloaded Debian ISO images**
+
 
 
 ## Tarea 4: Integridad y autenticidad (apt secure)
@@ -283,6 +345,8 @@ debian-10.1.0-amd64-netinst.iso: La suma coincide
 Busca información sobre apt secure y responde las siguientes preguntas:
 
 **1. ¿Qué software utiliza apt secure para realizar la criptografía asimétrica?**
+
+Utiliza gpg con las instrucciones md5sum y sha
 
 **2. ¿Para que sirve el comando apt-key? ¿Qué muestra el comando apt-key list?**
 
