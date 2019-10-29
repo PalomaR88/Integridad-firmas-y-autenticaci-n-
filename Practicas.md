@@ -346,27 +346,80 @@ Busca información sobre apt secure y responde las siguientes preguntas:
 
 **1. ¿Qué software utiliza apt secure para realizar la criptografía asimétrica?**
 
-Utiliza gpg con las instrucciones md5sum y sha
+Utiliza **gpg**, que es una herramiento de encriptación y firmado.
+
 
 **2. ¿Para que sirve el comando apt-key? ¿Qué muestra el comando apt-key list?**
 
+**Apt-key** se usa para gestionar la lista de claves usadas por la herramienta apt. Con **apt-key list** se listan dichas claves.
+
+
 **3. En que fichero se guarda el anillo de claves que guarda la herramienta apt-key?**
+
+Se guarda en **/etc/apt/trusted.gpg**.
+
 
 **4. ¿Qué contiene el archivo Release de un repositorio de paquetes?. ¿Y el archivo Release.gpg?. Puedes ver estos archivos en el repositorio http://ftp.debian.org/debian/dists/Debian10.1/. Estos archivos se descargan cuando hacemos un apt update.**
 
+En el fichero Release se guardan los mensajes MD5 de los paquetes. Las firmas digitales del fichero Release se guardan en Release.gpg.
+
+
 **5. Explica el proceso por el cual el sistema nos asegura que los ficheros que estamos descargando son legítimos.**
 
+Los paquetes debian contienen un fichero llamado Release que contiene los mensajes MD5. Cuando se descarga un paquete se comprueba que el mensaje MD5 coincide con la propia del paquete gracias a la herramienta md5sum.
+
+Además, para certificar que el archivo Release no se ha modificado, se comprueba la firma gpg que contiene el fichero Release.gpg. Para ello, necesita conocer la llava pública del que firma el archivo.
+
+
 **6. añade de forma correcta el repositorio de virtualbox añadiendo la clave pública de virtualbox como se indica en la documentación.**
+
+Se añade la clave pública de Oracle:
+~~~
+paloma@coatlicue:~$ wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
+OK
+paloma@coatlicue:~$ wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
+OK
+~~~
+
+Se configura el fichero **/etc/apt/source.list**:
+~~~
+paloma@coatlicue:~$ sudo add-apt-repository "deb http://download.virtualbox.org/virtualbox/debian buster contrib" 
+~~~
+
+Y se instala:
+~~~
+sudo apt update
+sudo apt install virtualbox-6.0
+~~~
 
 
 ##Tarea 5: Autentificación: ejemplo SSH
 >Vamos a estudiar como la criptografía nos ayuda a cifrar las comunicaciones que hacemos utilizando el protocolo ssh, y cómo nos puede servir también para conseguir que un cliente se autentifique contra el servidor. Responde las siguientes cuestiones:
 
-**1. Explica los pasos que se producen entre el cliente y el servidor para que el protocolo cifre la información que se transmite? ¿Para qué se utiliza la criptografía simétrica? ¿Y la asimétrica?**
+**1. Explica los pasos que se producen entre el cliente y el servidor para que el protocolo cifre la información que se transmite ¿Para qué se utiliza la criptografía simétrica? ¿Y la asimétrica?**
+
+Para transmitir la autentificación del cliente se usa una encriptación robusta de 128 bits. Estos son dificil de descifrar y leer.
+
+### Criptografía simétrica
+Es un método criptográfico mediante el cual se utiliza una llave para cifrar y descifrar. Es un método fácil y rápido.
+
+### Criptografía asimétrica
+Es un método criptográfico mediante el cual se utilizan dos claves, privada y pública, para encriptar y desencriptar. Es una forma más segura que la anterior. 
+
 
 **2. Explica los dos métodos principales de autentificación: por contraseña y utilizando un par de claves públicas y privadas.**
 
-**3. En el cliente para uqe sirve el contenido que se guarda en el fichero ~/.ssh/know_hosts?**
+### Autentificación por contraseña
+Es una forma de autentificación usando encriptado asimétrico donde se emplea una contraseña para conectarse a un usuario por ssh.
+
+### Autentificación por par de claves
+Es una forma de autentificación usando escriptado asimétrico donde el usuario que quiere entrar en otro usuario, entrega su clave pública al usuario de destino y, gracias a esto, puede acceder a este por ssh comparándola con la clave privada. 
+
+
+**3. En el cliente para que sirve el contenido que se guarda en el fichero ~/.ssh/know_hosts?**
+
+El fichero know_hosts guarda las claves de host de las máquinas a las que el usuario ha accedido por ssh.
+
 
 **4. ¿Qué significa este mensaje que aparece la primera vez que nos conectamos a un servidor?**
 ~~~
@@ -375,6 +428,9 @@ Utiliza gpg con las instrucciones md5sum y sha
      ECDSA key fingerprint is SHA256:7ZoNZPCbQTnDso1meVSNoKszn38ZwUI4i6saebbfL4M.
      Are you sure you want to continue connecting (yes/no)? 
 ~~~
+
+Este aviso aparece la primera vez que nos conectamos a un servidor ssh y no tenemos la clave pública del usuario al que vamos a conectarnos y, por lo tanto, puede ser un servidor ssh no seguro. No vuelve a salir porque se guardará la clave del host en know_hosts.
+
 
 **5. En ocasiones cuando estamos trabajando en el cloud, y reutilizamos una ip flotante nos aparece este mensaje:**
 ~~~
@@ -395,102 +451,11 @@ Utiliza gpg con las instrucciones md5sum y sha
      ECDSA host key for 172.22.200.74 has changed and you have requested strict checking.
 ~~~
 
+Este mensaje indica que, al reutilizar la IP, la clave de host ha cambiado y pide que agrege la clave correcta o elimine la anterior.
+
+
 **6. ¿Qué guardamos y para qué sirve el fichero en el servidor ~/.ssh/authorized_keys?**
 
-
-En este primer apartado vamos a trabajar con las firmas electrónicas, para ello te pueden ayudar los siguientes enlaces:
-
-    Intercambiar claves
-    Firmado de claves (Debian)
-    Manual de creación y mantenimiento de clave GPG
-
-GPG
-
-    Manda un documento y la firma electrónica del mismo a un compañero. Verifica la firma que tu has recibido.
-
-    ¿Qué significa el mensaje que aparece en el momento de verificar la firma?
-
-     gpg: Firma correcta de "Pepe D <josedom24@gmail.com>" [desconocido]
-     gpg: ATENCIÓN: ¡Esta clave no está certificada por una firma de confianza!
-     gpg:          No hay indicios de que la firma pertenezca al propietario.
-     Huellas dactilares de la clave primaria: E8DD 5DA9 3B88 F08A DA1D  26BF 5141 3DDB 0C99 55FC
-
-    Vamos a crear un anillo de confianza entre los miembros de nuestra clase, para ello.
-        Tu clave pública debe estar en un servidor de claves
-        Escribe tu fingerprint en un papel y dárselo a tu compañero, para que puede descargarse tu clave pública.
-        Te debes bajar al menos tres claves públicas de compañeros. Firma estas claves.
-        Tu te debes asegurar que tu clave pública es firmada por al menos tres compañeros de la clase.
-        Puedes seguir el esquema que se nos presenta en la siguiente página de Debian:
-        Una vez que firmes una clave se la tendrás que devolver a su dueño, para que otra persona se la firme.
-        Cuando tengas las tres firmas sube la clave al servidor de claves y rellena tus datos en la tabla Claves públicas PGP 2019-2020
-        Asegurate que te vuelves a bajar las claves públicas de tus compañeros que tengan las tres firmas.
-    Muestra las firmas que tiene tu clave pública.
-    Comprueba que ya puedes verificar sin “problemas” una firma recibida por una persona en la que confías.
-    Comprueba que puedes verificar sin “problemas” una firma recibida por una tercera problema en la que confía una persona en la que tu confías.
-
-Tarea 2: Correo seguro con evolution/thunderbird (2 puntos)
-
-Ahora vamos a configurar nuestro cliente de correo electrónico para poder mandar correos cifrados, para ello:
-
-    Configura el cliente de correo evolution con tu cuenta de correo habitual
-    Añade a la cuenta las opciones de seguridad para poder enviar correos firmados con tu clave privada o cifrar los mensajes para otros destinatarios
-    Envía y recibe varios mensajes con tus compañeros y comprueba el funcionamiento adecuado de GPG
-
-Tarea 3: Integridad de ficheros (1 punto)
-
-Vamos a descargarnos la ISO de debian, y posteriormente vamos a comprobar su integridad.
-
-Puedes encontrar la ISO en la dirección: https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/.
-
-    Para validar el contenido de la imagen CD, solo asegúrese de usar la herramienta apropiada para sumas de verificación. Para cada versión publicada existen archivos de suma de comprobación con algoritmos fuertes (SHA256 y SHA512); debería usar las herramientas sha256sum o sha512sum para trabajar con ellos.
-    Verifica que el contenido del hash que has utilizado no ha sido manipulado, usando la firma digital que encontrarás en el repositorio. Puedes encontrar una guía para realizarlo en este artículo: How to verify an authenticity of downloaded Debian ISO images
-
-Tarea 4: Integridad y autenticidad (apt secure) (2 puntos)
-
-Cuando nos instalamos un paquete en nuestra distribución linux tenemos que asegurarnos que ese paquete es legítimo. Para conseguir este objetivo se utiliza criptografía asimétrica, y en el caso de Debian a este sistema se llama apt secure. Esto lo debemos tener en cuenta al utilizar los repositorios oficiales. Cuando añadamos nuevos repositorios tendremos que añadir las firmas necesarias para confiar en que los paquetes son legítimos y no han sido modificados.
-
-Busca información sobre apt secure y responde las siguientes preguntas:
-
-    ¿Qué software utiliza apt secure para realizar la criptografía asimétrica?
-    ¿Para que sirve el comando apt-key? ¿Qué muestra el comando apt-key list?
-    En que fichero se guarda el anillo de claves que guarda la herramienta apt-key?
-    ¿Qué contiene el archivo Release de un repositorio de paquetes?. ¿Y el archivo Release.gpg?. Puedes ver estos archivos en el repositorio http://ftp.debian.org/debian/dists/Debian10.1/. Estos archivos se descargan cuando hacemos un apt update.
-    Explica el proceso por el cual el sistema nos asegura que los ficheros que estamos descargando son legítimos.
-    añade de forma correcta el repositorio de virtualbox añadiendo la clave pública de virtualbox como se indica en la documentación.
-
-Tarea 5: Autentificación: ejemplo SSH (2 puntos)
-
-Vamos a estudiar como la criptografía nos ayuda a cifrar las comunicaciones que hacemos utilizando el protocolo ssh, y cómo nos puede servir también para conseguir que un cliente se autentifique contra el servidor. Responde las siguientes cuestiones:
-
-    Explica los pasos que se producen entre el cliente y el servidor para que el protocolo cifre la información que se transmite? ¿Para qué se utiliza la criptografía simétrica? ¿Y la asimétrica?
-    Explica los dos métodos principales de autentificación: por contraseña y utilizando un par de claves públicas y privadas.
-    En el cliente para uqe sirve el contenido que se guarda en el fichero ~/.ssh/know_hosts?
-
-    ¿Qué significa este mensaje que aparece la primera vez que nos conectamos a un servidor?
-
-     $ ssh debian@172.22.200.74
-     The authenticity of host '172.22.200.74 (172.22.200.74)' can't be established.
-     ECDSA key fingerprint is SHA256:7ZoNZPCbQTnDso1meVSNoKszn38ZwUI4i6saebbfL4M.
-     Are you sure you want to continue connecting (yes/no)? 
-
-    En ocasiones cuando estamos trabajando en el cloud, y reutilizamos una ip flotante nos aparece este mensaje:
-
-     $ ssh debian@172.22.200.74
-     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-     @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
-     @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-     IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
-     Someone could be eavesdropping on you right now (man-in-the-middle attack)!
-     It is also possible that a host key has just been changed.
-     The fingerprint for the ECDSA key sent by the remote host is
-     SHA256:W05RrybmcnJxD3fbwJOgSNNWATkVftsQl7EzfeKJgNc.
-     Please contact your system administrator.
-     Add correct host key in /home/jose/.ssh/known_hosts to get rid of this message.
-     Offending ECDSA key in /home/jose/.ssh/known_hosts:103
-       remove with:
-       ssh-keygen -f "/home/jose/.ssh/known_hosts" -R "172.22.200.74"
-     ECDSA host key for 172.22.200.74 has changed and you have requested strict checking.
-
-    ¿Qué guardamos y para qué sirve el fichero en el servidor ~/.ssh/authorized_keys?
+El fichero authorized_keys contiene las claves públicas con autorización para entrar en el usuario.
 
 
