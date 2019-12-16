@@ -1,4 +1,4 @@
-1. Selecciona un documento pdf y encríptalo y fírmalo (opción --sign). Envíalo a un compañero, que debe, en primer lugar, verificar la firma y posteriormente descifrar el documento.
+## 1. Selecciona un documento pdf y encríptalo y fírmalo (opción --sign). Envíalo a un compañero, que debe, en primer lugar, verificar la firma y posteriormente descifrar el documento.
 
 ~~~
 $ gpg --sign Servidor\ de\ instalación.pdf 
@@ -30,7 +30,7 @@ Huellas dactilares de la clave primaria: A615 146E 82E2 72C8 99A3  4100 F405 106
 ~~~
 
 
-2. Realiza el mismo ejercicio pero obteniendo una firma ASCII.
+## 2. Realiza el mismo ejercicio pero obteniendo una firma ASCII.
 ~~~
 $ gpg --export -a Paloma R. Garcia Campon > PalomaR.Garcia.asc
 ~~~
@@ -41,6 +41,6 @@ $ scp Servidor\ de\ instalación.pdf.gpg ftirado@172.22.6.25:
 0
 $ scp clave-publica.asc moralg@172.22.9.198:
 $ scp ExFH-2TR.pdf.gpg moralg@172.22.9.198:
-
+~~~
 
 

@@ -4,7 +4,7 @@
 
 *GPG*
 
-**1. Manda un documento y la firma electrónica del mismo a un compañero. Verifica la firma que tu has recibido.**
+#### 1. Manda un documento y la firma electrónica del mismo a un compañero. Verifica la firma que tu has recibido.
 Para crear la firma electrónica de un documento:
 ~~~
 paloma@coatlicue:~$ gpg --output pruebaFirma.txt.sig --detach-sign pruebaFirma.txt 
@@ -23,7 +23,7 @@ Huellas dactilares de la clave primaria: EC7E EAB6 F398 6FD9 7F72  A440 9F22 9BC
 ~~~
 
 
-**2. ¿Qué significa el mensaje que aparece en el momento de verificar la firma?**
+#### 2. ¿Qué significa el mensaje que aparece en el momento de verificar la firma?
 ~~~
 gpg: Firma correcta de "Pepe D <josedom24@gmail.com>" [desconocido]
 gpg: ATENCIÓN: ¡Esta clave no está certificada por una firma de confianza!
@@ -34,7 +34,7 @@ Huellas dactilares de la clave primaria: E8DD 5DA9 3B88 F08A DA1D  26BF 5141 3DD
 Significa que, aunque el fichero y el certificado concuerdan, no hay ninguna garantía de que el usuario de la firma sea de verdad esa persona.
 
 
-**3. Vamos a crear un anillo de confianza entre los miembros de nuestra clase, para ello.**
+#### 3. Vamos a crear un anillo de confianza entre los miembros de nuestra clase, para ello.
 - Tu clave pública debe estar en un servidor de claves
 
 - Puedes seguir el esquema que se nos presenta en la siguiente página de Debian:
@@ -167,7 +167,7 @@ paloma@coatlicue:~$ gpg --import Descargas/clavePaloma.asc
 
 
 
-**4. Muestra las firmas que tiene tu clave pública.**
+#### 4. Muestra las firmas que tiene tu clave pública.
 ~~~
 paloma@coatlicue:~$ gpg --list-sign
 /home/paloma/.gnupg/pubring.kbx
@@ -184,7 +184,7 @@ sig          952393CC31351D81 2019-10-07  Paloma R. Garcia Campon <palomagarciac
 ~~~
 
 
-**5. Comprueba que ya puedes verificar sin “problemas” una firma recibida por una persona en la que confías.**
+#### 5. Comprueba que ya puedes verificar sin “problemas” una firma recibida por una persona en la que confías.
 
 Se añade la clave del compañero actualizada:
 ~~~
@@ -208,7 +208,7 @@ gpg: Firma correcta de "Alejandro Morales Gracia <ale95mogra@gmail.com>" [total]
 ~~~
 
 
-**6. Comprueba que puedes verificar sin “problemas” una firma recibida por una tercera persona en la que confía una persona en la que tu confías.**
+#### 6. Comprueba que puedes verificar sin “problemas” una firma recibida por una tercera persona en la que confía una persona en la que tu confías.
 
 Hay que editar la clave del compañero en el que vamos a confiar para tener confianza absoluta:
 ~~~
@@ -274,26 +274,26 @@ gpg: Firma correcta de "Luis Vazquez Alejo <luisvazquezalejo@gmail.com>" [total]
 
 >Ahora vamos a configurar nuestro cliente de correo electrónico para poder mandar correos cifrados, para ello:
 
-**1. Configura el cliente de correo evolution con tu cuenta de correo habitual**
+#### 1. Configura el cliente de correo evolution con tu cuenta de correo habitual
 
 Se entra en la interfaz gráfica del correo evolution y se introduce los datos del correo:
-![imagen1](Img_t2A.png)
-![imagen2](https://github.com/PalomaR88/Integridad-firmas-y-autenticaci-n-/blob/master/Img_tarea2B.png)
+![imagen1](images/Img_t2A.png)
+![imagen2](images/Img_tarea2B.png)
 
 Se selecciona Enviar/Recibir.
 
 
-**2. Añade a la cuenta las opciones de seguridad para poder enviar correos firmados con tu clave privada o cifrar los mensajes para otros destinatarios**
+#### 2. Añade a la cuenta las opciones de seguridad para poder enviar correos firmados con tu clave privada o cifrar los mensajes para otros destinatarios
 
 En la pesta Editar, se selecciona Preferencias. Se selecciona la cuenta a la que se quiere añadir la clave y se se añade el Id de la clave en la pestaña seguridad. 
 
-![imagen3](Img_t2.png)
+![imagen3](images/Img_t2.png)
 
 
-**3. Envía y recibe varios mensajes con tus compañeros y comprueba el funcionamiento adecuado de GPG**
+#### 3. Envía y recibe varios mensajes con tus compañeros y comprueba el funcionamiento adecuado de GPG
 
-![Imagen4](Img_t2B.png)
-![Imagen5](Img_t3.png)
+![Imagen4](images/Img_t2B.png)
+![Imagen5](images/Img_t3.png)
 
 
 ## Tarea 3: Integridad de ficheros
@@ -301,9 +301,9 @@ En la pesta Editar, se selecciona Preferencias. Se selecciona la cuenta a la que
 
 >Puedes encontrar la ISO en la dirección: https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/.
 
-**1. Para validar el contenido de la imagen CD, solo asegúrese de usar la herramienta apropiada para sumas de verificación. Para cada versión publicada existen archivos de suma de comprobación con algoritmos fuertes (SHA256 y SHA512); debería usar las herramientas sha256sum o sha512sum para trabajar con ellos.**
+#### 1. Para validar el contenido de la imagen CD, solo asegúrese de usar la herramienta apropiada para sumas de verificación. Para cada versión publicada existen archivos de suma de comprobación con algoritmos fuertes (SHA256 y SHA512); debería usar las herramientas sha256sum o sha512sum para trabajar con ellos.
 
-**2. Verifica que el contenido del hash que has utilizado no ha sido manipulado, usando la firma digital que encontrarás en el repositorio. Puedes encontrar una guía para realizarlo en este artículo: How to verify an authenticity of downloaded Debian ISO images**
+#### 2. Verifica que el contenido del hash que has utilizado no ha sido manipulado, usando la firma digital que encontrarás en el repositorio. Puedes encontrar una guía para realizarlo en este artículo: How to verify an authenticity of downloaded Debian ISO images
 
 Descarga de los ficheros necesarios:
 ~~~
@@ -344,34 +344,34 @@ debian-10.1.0-amd64-netinst.iso: La suma coincide
 
 Busca información sobre apt secure y responde las siguientes preguntas:
 
-**1. ¿Qué software utiliza apt secure para realizar la criptografía asimétrica?**
+#### 1. ¿Qué software utiliza apt secure para realizar la criptografía asimétrica?
 
 Utiliza **gpg**, que es una herramiento de encriptación y firmado.
 
 
-**2. ¿Para que sirve el comando apt-key? ¿Qué muestra el comando apt-key list?**
+#### 2. ¿Para que sirve el comando apt-key? ¿Qué muestra el comando apt-key list?
 
 **Apt-key** se usa para gestionar la lista de claves usadas por la herramienta apt. Con **apt-key list** se listan dichas claves.
 
 
-**3. En que fichero se guarda el anillo de claves que guarda la herramienta apt-key?**
+#### 3. En que fichero se guarda el anillo de claves que guarda la herramienta apt-key?
 
 Se guarda en **/etc/apt/trusted.gpg**.
 
 
-**4. ¿Qué contiene el archivo Release de un repositorio de paquetes?. ¿Y el archivo Release.gpg?. Puedes ver estos archivos en el repositorio http://ftp.debian.org/debian/dists/Debian10.1/. Estos archivos se descargan cuando hacemos un apt update.**
+#### 4. ¿Qué contiene el archivo Release de un repositorio de paquetes?. ¿Y el archivo Release.gpg?. Puedes ver estos archivos en el repositorio http://ftp.debian.org/debian/dists/Debian10.1/. Estos archivos se descargan cuando hacemos un apt update.
 
 En el fichero Release se guardan los mensajes MD5 de los paquetes. Las firmas digitales del fichero Release se guardan en Release.gpg.
 
 
-**5. Explica el proceso por el cual el sistema nos asegura que los ficheros que estamos descargando son legítimos.**
+#### 5. Explica el proceso por el cual el sistema nos asegura que los ficheros que estamos descargando son legítimos.
 
 Los paquetes debian contienen un fichero llamado Release que contiene los mensajes MD5. Cuando se descarga un paquete se comprueba que el mensaje MD5 coincide con la propia del paquete gracias a la herramienta md5sum.
 
 Además, para certificar que el archivo Release no se ha modificado, se comprueba la firma gpg que contiene el fichero Release.gpg. Para ello, necesita conocer la llava pública del que firma el archivo.
 
 
-**6. añade de forma correcta el repositorio de virtualbox añadiendo la clave pública de virtualbox como se indica en la documentación.**
+#### 6. añade de forma correcta el repositorio de virtualbox añadiendo la clave pública de virtualbox como se indica en la documentación.
 
 Se añade la clave pública de Oracle:
 ~~~
@@ -393,35 +393,35 @@ sudo apt install virtualbox-6.0
 ~~~
 
 
-##Tarea 5: Autentificación: ejemplo SSH
+## Tarea 5: Autentificación: ejemplo SSH
 >Vamos a estudiar como la criptografía nos ayuda a cifrar las comunicaciones que hacemos utilizando el protocolo ssh, y cómo nos puede servir también para conseguir que un cliente se autentifique contra el servidor. Responde las siguientes cuestiones:
 
-**1. Explica los pasos que se producen entre el cliente y el servidor para que el protocolo cifre la información que se transmite ¿Para qué se utiliza la criptografía simétrica? ¿Y la asimétrica?**
+#### 1. Explica los pasos que se producen entre el cliente y el servidor para que el protocolo cifre la información que se transmite ¿Para qué se utiliza la criptografía simétrica? ¿Y la asimétrica?
 
 Para transmitir la autentificación del cliente se usa una encriptación robusta de 128 bits. Estos son dificil de descifrar y leer.
 
-### Criptografía simétrica
+**Criptografía simétrica**
 Es un método criptográfico mediante el cual se utiliza una llave para cifrar y descifrar. Es un método fácil y rápido.
 
-### Criptografía asimétrica
+**Criptografía asimétrica**
 Es un método criptográfico mediante el cual se utilizan dos claves, privada y pública, para encriptar y desencriptar. Es una forma más segura que la anterior. 
 
 
-**2. Explica los dos métodos principales de autentificación: por contraseña y utilizando un par de claves públicas y privadas.**
+#### 2. Explica los dos métodos principales de autentificación: por contraseña y utilizando un par de claves públicas y privadas.
 
-### Autentificación por contraseña
+**Autentificación por contraseña**
 Es una forma de autentificación usando encriptado asimétrico donde se emplea una contraseña para conectarse a un usuario por ssh.
 
-### Autentificación por par de claves
+**Autentificación por par de claves**
 Es una forma de autentificación usando escriptado asimétrico donde el usuario que quiere entrar en otro usuario, entrega su clave pública al usuario de destino y, gracias a esto, puede acceder a este por ssh comparándola con la clave privada. 
 
 
-**3. En el cliente para que sirve el contenido que se guarda en el fichero ~/.ssh/know_hosts?**
+#### 3. En el cliente para que sirve el contenido que se guarda en el fichero ~/.ssh/know_hosts?
 
 El fichero know_hosts guarda las claves de host de las máquinas a las que el usuario ha accedido por ssh.
 
 
-**4. ¿Qué significa este mensaje que aparece la primera vez que nos conectamos a un servidor?**
+#### 4. ¿Qué significa este mensaje que aparece la primera vez que nos conectamos a un servidor?
 ~~~
      $ ssh debian@172.22.200.74
      The authenticity of host '172.22.200.74 (172.22.200.74)' can't be established.
@@ -432,7 +432,7 @@ El fichero know_hosts guarda las claves de host de las máquinas a las que el us
 Este aviso aparece la primera vez que nos conectamos a un servidor ssh y no tenemos la clave pública del usuario al que vamos a conectarnos y, por lo tanto, puede ser un servidor ssh no seguro. No vuelve a salir porque se guardará la clave del host en know_hosts.
 
 
-**5. En ocasiones cuando estamos trabajando en el cloud, y reutilizamos una ip flotante nos aparece este mensaje:**
+#### 5. En ocasiones cuando estamos trabajando en el cloud, y reutilizamos una ip flotante nos aparece este mensaje:
 ~~~
      $ ssh debian@172.22.200.74
      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -454,7 +454,7 @@ Este aviso aparece la primera vez que nos conectamos a un servidor ssh y no tene
 Este mensaje indica que, al reutilizar la IP, la clave de host ha cambiado y pide que agrege la clave correcta o elimine la anterior.
 
 
-**6. ¿Qué guardamos y para qué sirve el fichero en el servidor ~/.ssh/authorized_keys?**
+#### 6. ¿Qué guardamos y para qué sirve el fichero en el servidor ~/.ssh/authorized_keys?
 
 El fichero authorized_keys contiene las claves públicas con autorización para entrar en el usuario.
 
